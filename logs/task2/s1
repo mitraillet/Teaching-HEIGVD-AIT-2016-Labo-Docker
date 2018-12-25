@@ -1,0 +1,40 @@
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] done.
+[services.d] starting services
+[services.d] done.
+/opt/bin/serf agent --join ha --tag role=backend
+==> Starting Serf agent...
+==> Starting Serf agent RPC...
+==> Serf agent running!
+         Node name: '1892a5949b20'
+         Bind addr: '0.0.0.0:7946'
+          RPC addr: '127.0.0.1:7373'
+         Encrypted: false
+          Snapshot: false
+           Profile: lan
+==> Joining cluster...(replay: false)
+    Join completed. Synced with 1 initial agents
+
+==> Log data will now stream in as it occurs:
+
+    2018/12/25 17:08:19 [INFO] agent: Serf agent starting
+    2018/12/25 17:08:19 [INFO] serf: EventMemberJoin: 1892a5949b20 172.18.0.2
+    2018/12/25 17:08:19 [INFO] agent: joining: [ha] replay: false
+    2018/12/25 17:08:19 [INFO] serf: EventMemberJoin: 770460209e03 172.18.0.4
+    2018/12/25 17:08:19 [INFO] agent: joined: 1 nodes
+    2018/12/25 17:08:20 [INFO] agent: Received event: member-join
+Application started
+    2018/12/25 17:08:21 [INFO] serf: EventMemberJoin: 139a1059e829 172.18.0.3
+    2018/12/25 17:08:22 [INFO] agent: Received event: member-join
+    2018/12/25 17:08:24 [ERR] memberlist: Failed TCP fallback ping: EOF
+    2018/12/25 17:08:24 [INFO] memberlist: Suspect 770460209e03 has failed, no acks received
+    2018/12/25 17:08:26 [ERR] memberlist: Failed TCP fallback ping: EOF
+    2018/12/25 17:08:26 [INFO] memberlist: Suspect 770460209e03 has failed, no acks received
+    2018/12/25 17:08:27 [ERR] memberlist: Failed TCP fallback ping: EOF
+    2018/12/25 17:08:27 [INFO] memberlist: Suspect 770460209e03 has failed, no acks received
+    2018/12/25 17:08:29 [INFO] serf: EventMemberFailed: 770460209e03 172.18.0.4
+    2018/12/25 17:08:30 [INFO] agent: Received event: member-failed

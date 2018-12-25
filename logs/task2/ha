@@ -1,0 +1,53 @@
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] done.
+[services.d] starting services
+[services.d] done.
+[WARNING] 358/170823 (172) : Server nodes/s1 is DOWN, reason: Layer4 connection problem, info: "Connection refused", check duration: 0ms. 1 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.
+[WARNING] 358/170824 (172) : Server nodes/s2 is DOWN, reason: Layer4 connection problem, info: "Connection refused", check duration: 0ms. 0 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.
+[ALERT] 358/170824 (172) : backend 'nodes' has no server available!
+/opt/bin/serf agent --join ha --replay --event-handler member-join=/serf-handlers/member-join.sh --event-handler member-leave,member-failed=/serf-handlers/member-leave.sh --tag role=balancer
+==> Starting Serf agent...
+==> Starting Serf agent RPC...
+==> Serf agent running!
+         Node name: '49713bde9b77'
+         Bind addr: '0.0.0.0:7946'
+          RPC addr: '127.0.0.1:7373'
+         Encrypted: false
+          Snapshot: false
+           Profile: lan
+==> Joining cluster...(replay: true)
+    Join completed. Synced with 1 initial agents
+
+==> Log data will now stream in as it occurs:
+
+    2018/12/25 17:08:23 [INFO] agent: Serf agent starting
+    2018/12/25 17:08:23 [INFO] serf: EventMemberJoin: 49713bde9b77 172.18.0.4
+    2018/12/25 17:08:23 [INFO] agent: joining: [ha] replay: true
+    2018/12/25 17:08:24 [INFO] agent: joined: 1 nodes
+    2018/12/25 17:08:24 [WARN] memberlist: Got ping for unexpected node '770460209e03' from=172.18.0.3:7946
+    2018/12/25 17:08:24 [WARN] memberlist: Got ping for unexpected node 770460209e03 from=172.18.0.2:47771
+    2018/12/25 17:08:24 [WARN] memberlist: Got ping for unexpected node '770460209e03' from=172.18.0.3:7946
+    2018/12/25 17:08:24 [WARN] memberlist: Got ping for unexpected node '770460209e03' from=172.18.0.2:7946
+    2018/12/25 17:08:24 [WARN] memberlist: Got ping for unexpected node 770460209e03 from=172.18.0.3:56518
+    2018/12/25 17:08:24 [INFO] agent: Received event: member-join
+    2018/12/25 17:08:25 [ERR] agent: Error invoking script '/serf-handlers/member-join.sh': exit status 127
+    2018/12/25 17:08:25 [WARN] memberlist: Got ping for unexpected node '770460209e03' from=172.18.0.2:7946
+    2018/12/25 17:08:26 [WARN] memberlist: Got ping for unexpected node '770460209e03' from=172.18.0.3:7946
+    2018/12/25 17:08:26 [WARN] memberlist: Got ping for unexpected node 770460209e03 from=172.18.0.2:47775
+    2018/12/25 17:08:26 [WARN] memberlist: Got ping for unexpected node '770460209e03' from=172.18.0.2:7946
+    2018/12/25 17:08:27 [WARN] memberlist: Got ping for unexpected node '770460209e03' from=172.18.0.3:7946
+    2018/12/25 17:08:27 [WARN] memberlist: Got ping for unexpected node 770460209e03 from=172.18.0.2:47777
+    2018/12/25 17:08:27 [WARN] memberlist: Got ping for unexpected node '770460209e03' from=172.18.0.3:7946
+    2018/12/25 17:08:27 [WARN] memberlist: Got ping for unexpected node '770460209e03' from=172.18.0.2:7946
+    2018/12/25 17:08:27 [WARN] memberlist: Got ping for unexpected node 770460209e03 from=172.18.0.3:56524
+    2018/12/25 17:08:28 [WARN] memberlist: Got ping for unexpected node '770460209e03' from=172.18.0.3:7946
+    2018/12/25 17:08:28 [WARN] memberlist: Got ping for unexpected node 770460209e03 from=172.18.0.3:56526
+    2018/12/25 17:08:28 [WARN] memberlist: Got ping for unexpected node '770460209e03' from=172.18.0.2:7946
+    2018/12/25 17:08:51 [INFO] serf: EventMemberJoin: 1892a5949b20 172.18.0.2
+    2018/12/25 17:08:51 [INFO] serf: EventMemberJoin: 139a1059e829 172.18.0.3
+    2018/12/25 17:08:52 [INFO] agent: Received event: member-join
+    2018/12/25 17:08:52 [ERR] agent: Error invoking script '/serf-handlers/member-join.sh': exit status 127

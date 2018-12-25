@@ -101,8 +101,8 @@
 
 2. Describe your difficulties for this task and your understanding of what is happening during this task. Explain in your own words why are we installing a process supervisor. Do not hesitate to do more research and to find more articles on that topic to illustrate the problem.
 
-    Nous téléchargeons et installons S6 dans les différents containers, nous changeons le ENTRYPOINT avec /init pour que les exécutions de commande se produisent au démarrage du container et ensuite, nous copions les scripts run de la machine hôte vers les containers pour enfin les exécuter après le démarrage de S6 qui est le premier processus à se mettre en marche.
-    Nous installons un superviseur pour surveiller les serveurs et permettre ainsi de récuperer les logs plus facilement.
+    Nous téléchargeons et installons S6 dans les différents containers, nous changeons le ENTRYPOINT avec /init pour que les exécutions de commande se produisent via S6 et ensuite, nous copions les scripts run de la machine hôte vers les containers pour enfin les exécuter après le démarrage de S6 qui est le premier processus à se mettre en marche.
+    Nous installons un superviseur pour surveiller les serveurs et permettre ainsi de gérer les logs plus facilement.
 
 ## <a name="task-2">Task 2: Add a tool to manage membership in the web server cluster</a>
 
@@ -122,10 +122,15 @@
 
 2. Give the answer to the question about the existing problem with the current solution.
 
+    La solution actuelle présente comme problème que l'on travaille en centraliser avec tous les serveurs se joignant au cluster de ha alors que le but de serf est de travailler en décentraliser. L'autre inconvénient majeur est que la configuration n'est pas dynamique donc si ha ne démarre pas en premier aucun cluster ne sera crée et donc pas de log même si l'on démarre ha après s1 et s2. D'où l'importance de travailler en décentralisant et en se connectant au précédent serveur mise en service ce qui par cascade permet d'avoir un cluster qui se crée et que ha pourrait rejoindre en prenant l'exemple précédemment cité.
+
 3. Give an explanation on how `Serf` is working. Read the official website to get more details about the `GOSSIP` protocol used in `Serf`. Try to find other solutions that can be used to solve similar situations where we need some auto-discovery mechanism.
 
-
-
+    Serf fonctionne sur un principe de groupe/cluster et de diffusion d'information au sein d'un groupe. Lorsqu'un serveur active serf soit il peut rejoindre un groupe, soit il en crée un. S'il en crée un alors, il s'attend à être rejoint par d'autres périphériques. Pour rejoindre un cluster, il suffit de donner l'adresse d'au moins un membre du groupe, un serveur rejoignant un cluster va d'abord faire une synchronisation d'état complète avec le serveur existant sur TCP et ensuite, envoie ses informations au groupe. Dans ce protocole, une mise à jour est faite régulièrement entre tous les membres d'un cluster.
+    
+    Sur ce site <a href=https://www.ctl.io/developers/blog/post/decentralizing-docker-how-to-use-serf-with-docker/>Decentralizing Docker: How to Use Serf with Docker</a>, on nous donne des informations pour ajouter de manière manuelle des containers à un cluster Serf mais on pourrait très bien transformer cela en script pour créer automatiquement un cluster à l'initialisation des containers.
+    Il existe d'autres solutions comme <a href=https://www.consul.io/>Consul</a>, <a href=http://zookeeper.apache.org/>ZooKeeper</a> <a href=https://github.com/ha/doozerd>doozerd</a>, <a href=https://coreos.com/etcd/>etcd</a>. Consul est l'équivalent de Serf mais en centraliser ce qui lui permet de posséder des fonctionnalités plus poussées. ZooKeeper, doozerd et etcd sont des solutions centraliser mais qui demande une configuration de base beaucoup plus poussées que Serf mais par la suite permettent plus de fonctionnalité.
+    
 ## <a name="task-3">Task 3: React to membership changes</a>
 
 **Deliverables**:

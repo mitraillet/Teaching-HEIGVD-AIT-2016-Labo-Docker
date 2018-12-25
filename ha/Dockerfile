@@ -14,7 +14,12 @@ RUN curl -sSLo /tmp/s6.tar.gz https://github.com/just-containers/s6-overlay/rele
   && tar xzf /tmp/s6.tar.gz -C / \
   && rm -f /tmp/s6.tar.gz
 
-# TODO: [Serf] Install
+# Install serf (for decentralized cluster membership: https://www.serf.io/)
+RUN mkdir /opt/bin \
+    && curl -sSLo /tmp/serf.gz https://releases.hashicorp.com/serf/0.7.0/serf_0.7.0_linux_amd64.zip \
+    && gunzip -c /tmp/serf.gz > /opt/bin/serf \
+    && chmod 755 /opt/bin/serf \
+    && rm -f /tmp/serf.gz
 
 # TODO: [HB] Install NodeJS
 
@@ -23,7 +28,9 @@ RUN curl -sSLo /tmp/s6.tar.gz https://github.com/just-containers/s6-overlay/rele
 # This will start S6 as our main process in our container
 ENTRYPOINT ["/init"]
 
-# TODO: [Serf] Add Serf S6 setup
+# Copy the serf service and make the run script executable
+COPY services/serf /etc/services.d/serf
+RUN chmod +x /etc/services.d/serf/run
 
 # TODO: [Serf] Copy events handler scripts
 
@@ -38,7 +45,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # TODO: [CFG] Create the nodes folder
 
-# TODO: [Serf] Expose ports
+# Expose the ports for Serf
+EXPOSE 7946 7373
 
 # Expose the HA proxy ports
 EXPOSE 80 1936
