@@ -85,7 +85,7 @@
 
 1. Take a screenshot of the stats page of HAProxy at <http://192.168.42.42:1936>. You should see your backend nodes.
 
-![alt Capture d'écran de la page de statistique de HAProxy](img\task1_screenStatPage.PNG)
+![alt Capture d'écran de la page de statistique de HAProxy](img/task1_screenStatPage.PNG)
 
 2. Give the URL of your repository URL in the lab report.
    <https://github.com/mitraillet/Teaching-HEIGVD-AIT-2016-Labo-Docker>
