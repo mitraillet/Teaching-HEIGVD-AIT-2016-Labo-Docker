@@ -85,7 +85,7 @@
 
 1. Take a screenshot of the stats page of HAProxy at <http://192.168.42.42:1936>. You should see your backend nodes.
 
-![alt Capture d'écran de la page de statistique de HAProxy](img/task1_screenStatPage.PNG)
+![Capture d'écran de la page de statistique de HAProxy](img/task0_screenStatPage.PNG)
 
 2. Give the URL of your repository URL in the lab report.
    <https://github.com/mitraillet/Teaching-HEIGVD-AIT-2016-Labo-Docker>
@@ -95,26 +95,20 @@
 
 **Deliverables**:
 
-1. Take a screenshot of the stats page of HAProxy at
-   <http://192.168.42.42:1936>. You should see your backend nodes. It
-   should be really similar to the screenshot of the previous task.
+1. Take a screenshot of the stats page of HAProxy at <http://192.168.42.42:1936>. You should see your backend nodes. It should be really similar to the screenshot of the previous task.
 
-2. Describe your difficulties for this task and your understanding of
-   what is happening during this task. Explain in your own words why
-   are we installing a process supervisor. Do not hesitate to do more
-   research and to find more articles on that topic to illustrate the
-   problem.
+![Capture d'écran de la page de statistique de HAProxy](img/task1_screenStatPage.PNG)
 
+2. Describe your difficulties for this task and your understanding of what is happening during this task. Explain in your own words why are we installing a process supervisor. Do not hesitate to do more research and to find more articles on that topic to illustrate the problem.
+
+    Nous téléchargeons et installons S6 dans les différents containers, nous changeons le ENTRYPOINT avec /init pour que les exécutions de commande se produisent au démarrage du container et ensuite, nous copions les scripts run de la machine hôte vers les containers pour enfin les exécuter après le démarrage de S6 qui est le premier processus à se mettre en marche.
+    Nous installons un superviseur pour surveiller les serveurs et permettre ainsi de récuperer les logs plus facilement.
 
 ## <a name="task-2">Task 2: Add a tool to manage membership in the web server cluster</a>
 
 **Deliverables**:
 
-1. Provide the docker log output for each of the containers: `ha`,
-   `s1` and `s2`. You need to create a folder `logs` in your
-   repository to store the files separately from the lab
-   report. For each lab task create a folder and name it using the
-   task number. No need to create a folder when there are no logs.
+1. Provide the docker log output for each of the containers: `ha`, `s1` and `s2`. You need to create a folder `logs` in your repository to store the files separately from the lab report. For each lab task create a folder and name it using the task number. No need to create a folder when there are no logs.
 
    Example:
 
@@ -126,13 +120,10 @@
        |-- ...
    ```
 
-2. Give the answer to the question about the existing problem with the
-   current solution.
+2. Give the answer to the question about the existing problem with the current solution.
 
-3. Give an explanation on how `Serf` is working. Read the official
-   website to get more details about the `GOSSIP` protocol used in
-   `Serf`. Try to find other solutions that can be used to solve
-   similar situations where we need some auto-discovery mechanism.
+3. Give an explanation on how `Serf` is working. Read the official website to get more details about the `GOSSIP` protocol used in `Serf`. Try to find other solutions that can be used to solve similar situations where we need some auto-discovery mechanism.
+
 
 
 ## <a name="task-3">Task 3: React to membership changes</a>
