@@ -122,7 +122,7 @@
 
 2. Give the answer to the question about the existing problem with the current solution.
 
-    La solution actuelle présente comme problème que l'on travaille en centraliser avec tous les serveurs se joignant au cluster de ha alors que le but de serf est de travailler en décentraliser. L'autre inconvénient majeur est que la configuration n'est pas dynamique donc si ha ne démarre pas en premier aucun cluster ne sera crée et donc pas de log même si l'on démarre ha après s1 et s2. D'où l'importance de travailler en décentralisant et en se connectant au précédent serveur mise en service ce qui par cascade permet d'avoir un cluster qui se crée et que ha pourrait rejoindre en prenant l'exemple précédemment cité.
+    La solution actuelle présente comme problème que l'on travaille en centraliser avec tous les serveurs se joignant au cluster via ha alors que le but de serf est de travailler en décentraliser. L'autre inconvénient majeur est que la configuration n'est pas dynamique donc si ha ne démarre pas en premier ou alors quitte le cluster, aucun cluster ne sera crée ou aucun périphérique ne rejoindra le cluster existant et donc pas de log même si l'on démarre ha après s1 et s2. D'où l'importance de travailler en décentralisant et en se connectant au précédent serveur mise en service ce qui par cascade permet d'avoir un cluster et que ha pourrait rejoindre en prenant l'exemple précédemment cité.
 
 3. Give an explanation on how `Serf` is working. Read the official website to get more details about the `GOSSIP` protocol used in `Serf`. Try to find other solutions that can be used to solve similar situations where we need some auto-discovery mechanism.
 
