@@ -32,7 +32,12 @@ ENTRYPOINT ["/init"]
 COPY services/serf /etc/services.d/serf
 RUN chmod +x /etc/services.d/serf/run
 
-# TODO: [Serf] Copy events handler scripts
+# https://www.serf.io/docs/recipes/event-handler-router.html
+# Copy the serf service and make the run script executable
+COPY scripts/ /serf-handlers/
+RUN chmod +x /serf-handlers/member-join.sh
+RUN chmod +x /serf-handlers/member-leave.sh
+
 
 # Copy the haproxy and syslog config
 COPY config/haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
