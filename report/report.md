@@ -22,7 +22,7 @@
 
 1. <a name="M1"></a>**[M1]** Do you think we can use the current solution for a production environment? What are the main problems when deploying it in a production environment?
    
-    L'infrastructure proposée dans le labo 3 ne peut pas convenir en production. Cette dernière est beaucoup trop statique et implique trop de downtime en cas d'arrêt d'un serveur pour être utilisé en utilisation réelle.
+    L'infrastructure proposée dans le labo 3 ne peut pas convenir en production. Cette dernière est beaucoup trop statique et implique trop de downtime en cas d'arrêt d'un serveur pour être utilisée en utilisation réelle.
 
 2. <a name="M2"></a>**[M2]** Describe what you need to do to add new `webapp` container to the infrastructure. Give the exact steps of what you have to do without modifiying the way the things are done. Hint: You probably have to modify some configuration and script files in a Docker image.
    
@@ -58,7 +58,7 @@
 
 3. <a name="M3"></a>**[M3]** Based on your previous answers, you have detected some issues in the current solution. Now propose a better approach at a high level.
   
-    On pourrait utiliser docker swarm qui permet une meilleure gestion des containers ainsi qu'un meilleur échelonnage en cas d'un nombre de visite plus grand apporte l'avantage de ne plus être obliger de gérer un load balancer puisque l'on peut utiliser celui fournit par docker swarm. Ainsi que d'autres avantages : 
+    On pourrait utiliser docker swarm qui permet une meilleure gestion des containers ainsi qu'un meilleur échelonnage en cas d'un nombre de visites plus grand apporte l'avantage de ne plus être obligé de gérer un load balancer puisque l'on peut utiliser celui fournit par docker swarm. Ainsi que d'autres avantages : 
     [Aperçu de docker swarm](https://docs.docker.com/engine/swarm/)
     [Concept clé de docker swarm](https://docs.docker.com/engine/swarm/key-concepts/)
 
@@ -72,14 +72,14 @@
 
    Do you think our current solution is able to run additional management processes beside the main web server / load balancer process in a container? If no, what is missing / required to reach the goal? If yes, how to proceed to run for example a log forwarding process?
    
-    Actuellement, chaque Dockerfile et script `run.sh` n'installent et ne démarrent qu'un seul service, à l'exception de HAProxy qui run `rsyslog` pour garder les logs en local seulement. Cependant on pourrait installer et lancer `rsyslog` sur les deux serveurs ou d'autres daemon de management et permettre ainsi d'envoyer des traps smnp par exemple sur un server central. Une autre solution serait de mettre en place des volumes partagés entre les containers et la machine hôte mais bien que cela peut centraliser les logs, ce n'est pas viable si l'on travaille avec plusieurs machines physiques. La dernières solution serait d'utiliser des logiciels tel que Nagios ou TrueSight qui est spécialisé dans le monitoring cloud.
+    Actuellement, chaque Dockerfile et script `run.sh` n'installent et ne démarrent qu'un seul service, à l'exception de HAProxy qui run `rsyslog` pour garder les logs en local seulement. Cependant on pourrait installer et lancer `rsyslog` sur les deux serveurs ou d'autres daemon de management et permettre ainsi d'envoyer des traps smnp par exemple sur un serveur central. Une autre solution serait de mettre en place des volumes partagés entre les containers et la machine hôte mais bien que cela peut centraliser les logs, ce n'est pas viable si l'on travaille avec plusieurs machines physiques. La dernière solution serait d'utiliser des logiciels tels que Nagios ou TrueSight qui est spécialisé dans le monitoring cloud.
     
     
 6. <a name="M6"></a>**[M6]** In our current solution, although the load balancer configuration is changing dynamically, it doesn't follow dynamically the configuration of our distributed system when web servers are added or removed. If we take a closer look at the `run.sh` script, we see two calls to `sed` which will replace two lines in the `HAProxy.cfg` configuration file just before we start `HAProxy`. You clearly see that the configuration file has two lines and the script will replace these two lines.
 
    What happens if we add more web server nodes? Do you think it is really dynamic? It's far away from being a dynamic configuration. Can you propose a solution to solve this?
    
-   Ce n'est pas vraiment dynamique, il faudrait à chaque ajout de serveur ajouter une ligne dans ce fichier, ce qui n'est pas vraiment embêtant dans une petit infrastructure mais le deviendrait plus elle grandira. La solution la plus envisageable serait celle fournit par l'utilisation de le HAProxy Runtime API et de template. 
+   Ce n'est pas vraiment dynamique, il faudrait à chaque ajout de serveur ajouter une ligne dans ce fichier, ce qui n'est pas vraiment embêtant dans une petite infrastructure mais le deviendrait plus elle grandira. La solution la plus envisageable serait celle fournit par l'utilisation de la HAProxy Runtime API et de template. 
    
 
 **Deliverables**:
@@ -123,14 +123,14 @@
 
 2. Give the answer to the question about the existing problem with the current solution.
 
-    La solution actuelle présente comme problème que l'on travaille en centraliser avec tous les serveurs se joignant au cluster via ha alors que le but de serf est de travailler en décentraliser. L'autre inconvénient majeur est que la configuration n'est pas dynamique donc si ha ne démarre pas en premier ou alors quitte le cluster, aucun cluster ne sera crée ou aucun périphérique ne rejoindra le cluster existant et donc pas de log même si l'on démarre ha après s1 et s2. D'où l'importance de travailler en décentralisant et en se connectant au précédent serveur mise en service ce qui par cascade permet d'avoir un cluster et que ha pourrait rejoindre en prenant l'exemple précédemment cité.
+    La solution actuelle présente comme problème que l'on travaille en centraliser avec tous les serveurs se joignant au cluster via ha alors que le but de serf est de travailler en décentraliser. L'autre inconvénient majeur est que la configuration n'est pas dynamique donc si ha ne démarre pas en premier ou alors quitte le cluster, aucun cluster ne sera crée ou aucun périphérique ne rejoindra le cluster existant et donc pas de log même si l'on démarre ha après s1 et s2. D'où l'importance de travailler en décentralisant et en se connectant au précédent serveur mis en service ce qui par cascade permet d'avoir un cluster et que ha pourrait rejoindre en prenant l'exemple précédemment cité.
 
 3. Give an explanation on how `Serf` is working. Read the official website to get more details about the `GOSSIP` protocol used in `Serf`. Try to find other solutions that can be used to solve similar situations where we need some auto-discovery mechanism.
 
-    Serf fonctionne sur un principe de groupe/cluster et de diffusion d'information au sein d'un groupe. Lorsqu'un serveur active serf soit il peut rejoindre un groupe, soit il en crée un. S'il en crée un alors, il s'attend à être rejoint par d'autres périphériques. Pour rejoindre un cluster, il suffit de donner l'adresse d'au moins un membre du groupe, un serveur rejoignant un cluster va d'abord faire une synchronisation d'état complète avec le serveur existant sur TCP et ensuite, envoie ses informations au groupe. Dans ce protocole, une mise à jour est faite régulièrement entre tous les membres d'un cluster.
+    Serf fonctionne sur un principe de groupe/cluster et de diffusion d'information au sein d'un groupe. Lorsqu'un serveur active serf soit il peut rejoindre un groupe, soit il en crée un. S'il en crée un alors, il s'attend à être rejoint par d'autres périphériques. Pour rejoindre un cluster, il suffit de donner l'adresse d'au moins un membre du groupe, un serveur rejoignant un cluster va d'abord faire une synchronisation d'état complète avec le serveur existant sur TCP et ensuite, il envoie ses informations au groupe. Dans ce protocole, une mise à jour est faite régulièrement entre tous les membres d'un cluster.
     
     Sur ce site [Decentralizing Docker: How to Use Serf with Docker](https://www.ctl.io/developers/blog/post/decentralizing-docker-how-to-use-serf-with-docker/), on nous donne des informations pour ajouter de manière manuelle des containers à un cluster Serf mais on pourrait très bien transformer cela en script pour créer automatiquement un cluster à l'initialisation des containers.
-    Il existe d'autres solutions comme [Consul](https://www.consul.io/), [ZooKeeper](http://zookeeper.apache.org/), [doozerd](https://github.com/ha/doozerd), [etcd](https://coreos.com/etcd/). Consul est l'équivalent de Serf mais en centraliser ce qui lui permet de posséder des fonctionnalités plus poussées. ZooKeeper, doozerd et etcd sont des solutions centraliser mais qui demande une configuration de base beaucoup plus poussées que Serf mais par la suite permettent plus de fonctionnalité.
+    Il existe d'autres solutions comme [Consul](https://www.consul.io/), [ZooKeeper](http://zookeeper.apache.org/), [doozerd](https://github.com/ha/doozerd), [etcd](https://coreos.com/etcd/). Consul est l'équivalent de Serf mais en centraliser ce qui lui permet de posséder des fonctionnalités plus poussées. ZooKeeper, doozerd et etcd sont des solutions centralisées mais qui demande une configuration de base beaucoup plus poussées que Serf mais par la suite permettent plus de fonctionnalité.
     
 ## <a name="task-3">Task 3: React to membership changes</a>
 
@@ -165,15 +165,15 @@
 
   There are also some articles about techniques to reduce the image size. Try to find them. They are talking about `squashing` or `flattening` images.
   
-  Mettre un maximum de commande sur la même ligne permet de ne créer qu'une couche (layer) ce qui réduit la taille de l'image finale alors que mettre les commandes en cascade crée une cascade de couche possédant un poids pouvant dépasser largement celui de la couche unique. Cependant, la cascade permet lors de la modification d'une des dernières commandes de réutiliser les couches précédemment générées pour recréer l'image. Ce qui n'est pas le cas, lorsque toutes les commandes sont sur la même ligne, la couche doit alors être entièrement recrée.
+  Mettre un maximum de commande sur la même ligne permet de ne créer qu'une couche (layer) ce qui réduit la taille de l'image finale alors que mettre les commandes en cascade crée une cascade de couche possédant un poids pouvant dépasser largement celui de la couche unique. Cependant, la cascade permet lors de la modification d'une des dernières commandes de réutiliser les couches précédemment générées pour recréer l'image. Ce qui n'est pas le cas, lorsque toutes les commandes sont sur la même ligne, la couche doit alors être entièrement recréée.
   
-  L'option `--squash` permet de réduire la taille de l'image mais ce après l'avoir contruit comme présenter sur cet [exemple en ligne](https://geraldonit.com/2017/11/13/how-to-create-small-docker-images), on nous explique que docker crée d'abord l'image et ensuite, "écrase" l'image en copiant tout le file system de la première image générée dans une seconde ce qui donne lieu à un gain de la moitié de l'espace. Seul inconvénient, il faut posséder une fois et demi la taille de la première image d'espace libre car le système garde les deux.
+  L'option `--squash` permet de réduire la taille de l'image mais ce après l'avoir construit comme présenter sur cet [exemple en ligne](https://geraldonit.com/2017/11/13/how-to-create-small-docker-images), on nous explique que docker crée d'abord l'image et ensuite, "écrase" l'image en copiant tout le file system de la première image générée dans une seconde ce qui donne lieu à un gain de la moitié de l'espace. Seul inconvénient, il faut posséder une fois et demie la taille de la première image d'espace libre car le système garde les deux.
   
   [Sur ce site](https://www.ctl.io/developers/blog/post/optimizing-docker-images), on nous explique que le "flattening" d'image consiste à démarrer un container depuis une image et à importer dans une nouvelle image, l'exportation du container. Cependant, on nous déconseille le "flattening" d'image car celui-ci engendre la perte d'information parfois essentielle au fonctionnement d'un container comme les ouvertures de port, les variables d'environnement et les commandes par défaut. Mais suivant le cas, cela peut être un choix judicieux car dans l'exemple présenté cette technique permet de passer d'une image de 1GB à une de 85MB.
 
 2. Propose a different approach to architecture our images to be able to reuse as much as possible what we have done. Your proposition should also try to avoid as much as possible repetitions between your images.
 
-  Pour rendre le plus réutilisable possible le Dockerfile, il faudrait le structurer de manière à ce que les installations de services les plus réutilisés soient placées en premières. Pour optimiser la création aussi, il faudrait mettre en dernière position tout ce qui est `COPY`, `RUN chmod +x` et `EXPOSE` pour que lors de la modification des fichiers de configuration ou des scripts l'on réutilise au maximum ce qui est déjà mis en place. Ce regroupement doit bien sûr être logique et allant de la copie des fichiers les moins souvent édités à ceux le plus fréquement pour que l'on essaie de reconstruire les couches le plus tard possible dans le processus.
+  Pour rendre le plus réutilisable possible le Dockerfile, il faudrait le structurer de manière à ce que les installations de services les plus réutilisés soient placées en premières. Pour optimiser la création aussi, il faudrait mettre en dernière position tout ce qui est `COPY`, `RUN chmod +x` et `EXPOSE` pour que lors de la modification des fichiers de configuration ou des scripts l'on réutilise au maximum ce qui est déjà mis en place. Ce regroupement doit bien sûr être logique et allant de la copie des fichiers les moins souvent édités à ceux le plus fréquemment pour que l'on essaie de reconstruire les couches le plus tard possible dans le processus.
 
 3. Provide the `/tmp/HAProxy.cfg` file generated in the `ha` container after each step.  Place the output into the `logs` folder like you already did for the Docker logs in the previous tasks. Three files are expected.
    
@@ -183,7 +183,7 @@
    
 4. Based on the three output files you have collected, what can you say about the way we generate it? What is the problem if any?
     
-    En regardant dans la [documentation](https://docs.docker.com/engine/reference/commandline/inspect/), on se rend compte que l'on aurait pu formater les données de manières à avoir un fichier plus utile et contenant ce que l'on souhaite mettre en exerge car avec la manière de faire, nous récupérons toutes les informations mais certains champs sont simplement vides et inutiles ce qui alourdit le fichier et le rend moins lisible. 
+    En regardant dans la [documentation](https://docs.docker.com/engine/reference/commandline/inspect/), on se rend compte que l'on aurait pu formater les données de manière à avoir un fichier plus utile et contenant ce que l'on souhaite mettre en exergue car avec la manière de faire, nous récupérons toutes les informations mais certains champs sont simplement vides et inutiles ce qui alourdit le fichier et le rend moins lisible. 
 
 
 ## <a name="task-5">Task 5: Generate a new load balancer configuration when membership changes</a>
@@ -219,7 +219,7 @@
 
 ## <a name="difficulties">Difficulties</a>
 
-Lors des quatres premières tâches, aucune dificulté n'a été relevée et ayant déjà utilisé Docker, la compréhension des actions effectuées en a été facilité.
+Lors des quatre premières tâches, aucune difficulté n'a été relevée et ayant déjà utilisé Docker, la compréhension des actions effectuées en a été facilitée.
 
 ## <a name="conclusion">Conlusion</a>
 
@@ -237,4 +237,3 @@ Lors des quatres premières tâches, aucune dificulté n'a été relevée et aya
 <https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/#images-and-layers>
 <https://geraldonit.com/2017/11/13/how-to-create-small-docker-images>
 <https://www.ctl.io/developers/blog/post/optimizing-docker-images>
-<https://docs.docker.com/engine/reference/commandline/inspect/>
