@@ -1,0 +1,206 @@
+[
+    {
+        "Id": "f7f7e2ea0e8d9692fc0b41c9b1f1c7a7e3ec002df805bd5620866584083c34e1",
+        "Created": "2018-12-26T11:58:04.102413852Z",
+        "Path": "/init",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 13117,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2018-12-26T11:58:04.930189609Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:b3bdbed32cc87e60e48b05355e87ff2a27103a5c5591995f0ac3007b727b1a1f",
+        "ResolvConfPath": "/var/lib/docker/containers/f7f7e2ea0e8d9692fc0b41c9b1f1c7a7e3ec002df805bd5620866584083c34e1/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/f7f7e2ea0e8d9692fc0b41c9b1f1c7a7e3ec002df805bd5620866584083c34e1/hostname",
+        "HostsPath": "/var/lib/docker/containers/f7f7e2ea0e8d9692fc0b41c9b1f1c7a7e3ec002df805bd5620866584083c34e1/hosts",
+        "LogPath": "/var/lib/docker/containers/f7f7e2ea0e8d9692fc0b41c9b1f1c7a7e3ec002df805bd5620866584083c34e1/f7f7e2ea0e8d9692fc0b41c9b1f1c7a7e3ec002df805bd5620866584083c34e1-json.log",
+        "Name": "/s1",
+        "RestartCount": 0,
+        "Driver": "aufs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "heig",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "shareable",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DiskQuota": 0,
+            "KernelMemory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": 0,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/asound",
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": null,
+            "Name": "aufs"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "f7f7e2ea0e8d",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "3000/tcp": {},
+                "7373/tcp": {},
+                "7946/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NODE_VERSION=0.12.2",
+                "NPM_VERSION=2.9.1",
+                "ROLE=backend"
+            ],
+            "Cmd": null,
+            "Image": "softengheigvd/webapp",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/init"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "maintainer1": "Steve Henriquet  <steve.henriquet@heig-vd.ch>",
+                "maintainer2": "Kameni Tchieko Hyacinthe Silver <hyacinthe.kamenitchieko@heig-vd.ch>"
+            }
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "db8896880f97910045f88cbeca5faeb9fc56f2f50cdba3c06b091296969ca889",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "3000/tcp": null,
+                "7373/tcp": null,
+                "7946/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/db8896880f97",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "heig": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "f7f7e2ea0e8d"
+                    ],
+                    "NetworkID": "c66fad9cb072d40c02b5065c707979f08409188f1f3d13cbed506dbf5993dfff",
+                    "EndpointID": "c215adf6c327d9a0bcecea3609b6a8a03e3fb08e22bb33fd708a6fef8c84988a",
+                    "Gateway": "172.18.0.1",
+                    "IPAddress": "172.18.0.3",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:12:00:03",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]

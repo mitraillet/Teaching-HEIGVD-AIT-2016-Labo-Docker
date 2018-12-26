@@ -11,4 +11,7 @@ while read -a values; do
   HOSTTAGS=${values[3]}
 
   echo "Member join event received from: $HOSTNAME with role $HOSTROLE" >> /var/log/serf.log
+
+  # Generate the output file based on the template with the parameters as input for placeholders
+  handlebars --name $HOSTNAME --ip $HOSTIP < /config/haproxy.cfg.hb > /tmp/haproxy.cfg
 done
