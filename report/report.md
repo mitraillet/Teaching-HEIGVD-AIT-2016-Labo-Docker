@@ -19,7 +19,7 @@ Date: 2019-01-06
 
 ## <a name="introduction">Introduction</a>
 
-Ce labo s'appuie sur le laboratoire que nous avons réalisé précédemment et au cours de sa réalisation nous nous appuyerons sur les axes suivants : 
+Ce labo s'appuie sur le précédemment laboratoire que nous avons réalisé et au cours de sa réalisation, nous suivront les axes suivants : 
 - Identifier les problèmes et installer les outils
 - Ajouter un superviseur de processus pour exécuter plusieurs processus
 - Ajouter un outil pour gérer l'appartenance au cluster de serveurs Web
@@ -27,6 +27,8 @@ Ce labo s'appuie sur le laboratoire que nous avons réalisé précédemment et a
 - Utiliser un moteur de template pour générer facilement des fichiers de configuration
 - Générer une nouvelle configuration d'équilibreur de charge lorsque l'appartenance change
 - Faire que l'équilibreur de charge recharge automatiquement la nouvelle configuration
+
+Cela dans le but d'approfondir notre connaissance de Docker ainsi que le monitoring de différents containers et de mieux comprendre les mécanismes de scalling de serveur en cas d'influence.
 
 ## <a name="task-0">Task 0: Identify issues and install the tools</a>
 
@@ -130,6 +132,11 @@ Ce labo s'appuie sur le laboratoire que nous avons réalisé précédemment et a
        |-- task 3
        |-- ...
    ```
+   
+   Tous les logs se trouvent dans "logs/task2".
+   [contenu docker inspect Ha](../logs/task2/ha) 
+   [contenu docker inspect S1](../logs/task2/s1)
+   [contenu docker inspect S2](../logs/task2/s2) 
 
 2. Give the answer to the question about the existing problem with the current solution.
 
@@ -152,6 +159,10 @@ Ce labo s'appuie sur le laboratoire que nous avons réalisé précédemment et a
    file present in the container. Put the logs in the `logs` directory in your repo.
    
    Tous les logs se trouvent dans "logs/task3".
+   [contenu docker inspect Ha](../logs/task3/ha) 
+   [contenu docker inspect S1](../logs/task3/s1)
+   [contenu docker inspect S2](../logs/task3/s2)  
+   [contenu serf.log](../logs/task3/serf.log)
 
 
 ## <a name="task-4">Task 4: Use a template engine to easily generate configuration files</a>
@@ -191,6 +202,15 @@ Ce labo s'appuie sur le laboratoire que nous avons réalisé précédemment et a
    
    Tous les logs se trouvent dans le dossier "logs/task4".
    
+   [contenu de HAProxy 1](../logs/task5/tmp_haproxy1.cfg)
+   [contenu de HAProxy 2](../logs/task5/tmp_haproxy2.cfg) 
+   [contenu de HAProxy 3](../logs/task5/tmp_haproxy3.cfg)   
+   
+   [contenu docker Ps](../logs/task4/docker_ps) 
+   [contenu docker inspect Ha](../logs/task4/ha) 
+   [contenu docker inspect S1](../logs/task4/s1)
+   [contenu docker inspect S2](../logs/task4/s2)   
+   
 4. Based on the three output files you have collected, what can you say about the way we generate it? What is the problem if any?
     
     En regardant dans la [documentation](https://docs.docker.com/engine/reference/commandline/inspect/), on se rend compte que l'on aurait pu formater les données de manière à avoir un fichier plus utile et contenant ce que l'on souhaite mettre en exergue car avec la manière de faire, nous récupérons toutes les informations mais certains champs sont simplement vides et inutiles ce qui alourdit le fichier et le rend moins lisible. 
@@ -203,7 +223,7 @@ Ce labo s'appuie sur le laboratoire que nous avons réalisé précédemment et a
 1. Provide the file `/usr/local/etc/HAProxy/HAProxy.cfg` generated in the `ha` container after each step. Three files are expected.
 
 [contenu de HAProxy](../logs/task5/haProxy.txt)
-[contenu de HAProxy](../logs/task5/haProxyS1.txt)  
+[contenu de HAProxy](../logs/task5/haProxyS1.txt) 
 [contenu de HAProxy](../logs/task5/haProxyS2.txt)      
 
    
@@ -244,35 +264,43 @@ Une amélioration serait de rendre redondant l'équilibreur de charge, en ayant 
 [le site suivant nous a été utile ](https://cloud.google.com/solutions/autoscaled-load-balancing-using-haproxy-and-consul-on-compute-engine)
 
 
-
-
 ## <a name="difficulties">Difficulties</a>
 
 Lors de la réalisation de ce laboratoire, aucune difficulté n'a été relevée et ayant déjà utilisé Docker, la compréhension des actions effectuées en a été facilitée.
 
 ## <a name="conclusion">Conlusion</a>
 
-In this labo , we have learn a new things about docker like : 
+Dans ce laboratoire, nous avons appris de nouvelles choses sur docker comme : 
+* La création d'une image personnalisée à partir d'une image préexistante
 
-* Build your own Docker images
+* La supervision de processus légers pour Docker
 
-* Become familiar with lightweight process supervision for Docker
+* La compréhension des concepts de base pour la mise à l'échelle dynamique d'une application en production
 
-* Understand core concepts for dynamic scaling of an application in production
+* La mise en pratique de la gestion décentralisée des instances d'un serveurs web
 
-* Put into practice decentralized management of web server instances
-
+Tout cela, nous sera utile plus tard dans la compréhension des architectures systèmes avec lesquelles nous serons amenées à travailler. Même si, nous ne travaillons pas dans l'infrastructure et l'architecture d'un système tel que celui du labo, ce approche nous permettra d'être plus efficace pour sa sécurisation ou pour la gestion des ressources réseaux nécessaires à une telle infrastructure.
 
 ## <a name="source">Source</a>
 
 <https://docs.docker.com/engine/swarm/>
+
 <https://docs.docker.com/engine/swarm/key-concepts/>
+
 <https://www.haproxy.com/blog/dynamic-configuration-haproxy-runtime-api/>
+
 <https://www.ctl.io/developers/blog/post/decentralizing-docker-how-to-use-serf-with-docker/>
+
 <https://www.consul.io/>
+
 <http://zookeeper.apache.org/>
+
 <https://github.com/ha/doozerd>
+
 <https://coreos.com/etcd/>
+
 <https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/#images-and-layers>
+
 <https://geraldonit.com/2017/11/13/how-to-create-small-docker-images>
+
 <https://www.ctl.io/developers/blog/post/optimizing-docker-images>
