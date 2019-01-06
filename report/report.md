@@ -1,4 +1,6 @@
 # Laboratoire 04 - Docker
+Author: Steve Henriquet && Silver Kameni 
+Date: 2019-01-06
 
 ## Table of contents 
 
@@ -17,6 +19,14 @@
 
 ## <a name="introduction">Introduction</a>
 
+Ce labo s'appuie sur le laboratoire que nous avons réalisé précédemment et au cours de sa réalisation nous nous appuyerons sur les axes suivants : 
+- Identifier les problèmes et installer les outils
+- Ajouter un superviseur de processus pour exécuter plusieurs processus
+- Ajouter un outil pour gérer l'appartenance au cluster de serveurs Web
+- Réagir aux changements d'adhésion
+- Utiliser un moteur de template pour générer facilement des fichiers de configuration
+- Générer une nouvelle configuration d'équilibreur de charge lorsque l'appartenance change
+- Faire que l'équilibreur de charge recharge automatiquement la nouvelle configuration
 
 ## <a name="task-0">Task 0: Identify issues and install the tools</a>
 
@@ -191,17 +201,29 @@
 **Deliverables**:
 
 1. Provide the file `/usr/local/etc/HAProxy/HAProxy.cfg` generated in the `ha` container after each step. Three files are expected.
+
+[contenu de HAProxy](../logs/task5/haProxy.txt)
+[contenu de HAProxy](../logs/task5/haProxyS1.txt)  
+[contenu de HAProxy](../logs/task5/haProxyS2.txt)      
+
    
    In addition, provide a log file containing the output of the `docker ps` console and another file (per container) with `docker inspect <container>`. Four files are expected.
+   [contenu docker Ps](../logs/task5/dockerPs.txt) 
+   [contenu docker inspect Ha](../logs/task5/dockerInspectHa.txt) 
+   [contenu docker inspect S1](../logs/task5/dockerInspectS1.txt)
+   [contenu docker inspect S2](../logs/task5/dockerInspectS2.txt)   
+     
 
 2. Provide the list of files from the `/nodes` folder inside the `ha` container.
    One file expected with the command output.
+   [contenu list of files from /nodes ](../logs/task5/nodesFilesList.txt)
 
 3. Provide the configuration file after you stopped one container and the list of nodes present in the `/nodes` folder. One file expected with the command output. Two files are expected.
+[contenu de /nodes lorsque S2 est stoppé](../logs/task5/nodesFilesListWhenS2Stopped.txt)
    
     In addition, provide a log file containing the output of the `docker ps` console. One file expected.
+	![contenu de haProxy lorsque S2 est stoppé](../logs/task5/dockerinspecthawhenS2stopped.txt)
 
-4. (Optional:) Propose a different approach to manage the list of backend nodes. You do not need to implement it. You can also propose your own tools or the ones you discovered online. In that case, do not forget to cite your references.
    
    
 ## <a name="task-6">Task 6: Make the load balancer automatically reload the new configuration</a>
@@ -209,19 +231,36 @@
 **Deliverables**:
 
 1. Take a screenshots of the HAProxy stat page showing more than 2 web applications running. Additional screenshots are welcome to see a sequence of experimentations like shutting down a node and starting more nodes.
+![capture d'ecran HAProxy stat page](../report/img/task6_screenStatPage.PNG)
    
    Also provide the output of `docker ps` in a log file. At least  one file is expected. You can provide one output per step of your experimentation according to your screenshots.
+   [contenu docker ps with more than 2 webservers](../logs/task6/dockerPsTask6.txt)
    
 2. Give your own feelings about the final solution. Propose improvements or ways to do the things differently. If any, provide references to your readings for the improvements.
 
-3. (Optional:) Present a live demo where you add and remove a backend container.
+Nous pouvons dire que cette solution nous permettra certainement d'adapter notre infrastructure aux besoins de nos clients. 
+Une amélioration serait de rendre redondant l'équilibreur de charge, en ayant plus de deux nœuds ha, ce qui nous évitera d'avoir une panne de service due à un équilibreur de charge. une autre amélioration serait si le lancement ou la mise hors service des applications Web peut se faire automatiquement lorsque le besoin se présente sans intervention de l'administrateur système.  
+  
+[le site suivant nous a été utile ](https://cloud.google.com/solutions/autoscaled-load-balancing-using-haproxy-and-consul-on-compute-engine)
+
+
 
 
 ## <a name="difficulties">Difficulties</a>
 
-Lors des quatre premières tâches, aucune difficulté n'a été relevée et ayant déjà utilisé Docker, la compréhension des actions effectuées en a été facilitée.
+Lors de la réalisation de ce laboratoire, aucune difficulté n'a été relevée et ayant déjà utilisé Docker, la compréhension des actions effectuées en a été facilitée.
 
 ## <a name="conclusion">Conlusion</a>
+
+In this labo , we have learn a new things about docker like : 
+
+* Build your own Docker images
+
+* Become familiar with lightweight process supervision for Docker
+
+* Understand core concepts for dynamic scaling of an application in production
+
+* Put into practice decentralized management of web server instances
 
 
 ## <a name="source">Source</a>
